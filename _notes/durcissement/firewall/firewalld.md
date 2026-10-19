@@ -7,11 +7,11 @@ nav_order: 3
 
 # firewalld
 
-**firewalld** est un pare-feu utilisé principalement dans l'écosystème Red Hat (RHEL, Rocky Linux, AlmaLinux, Fedora, etc.). Comme UFW, il agit comme une couche d'abstraction permettant de simplifier la configuration du pare-feu Linux sans avoir à manipuler directement nftables ou iptables. 
+**firewalld** est un pare-feu utilisé principalement dans l'écosystème Red Hat (RHEL, AlmaLinux, Fedora, etc). Comme UFW, il agit comme une couche d'abstraction permettant de simplifier la configuration du pare-feu Linux sans avoir à manipuler directement nftables ou iptables. 
 
-Firewalld introduit la notion de **zones**, permettant d'appliquer différents niveaux de confiance selon différents critères (interface réseau spécifique, sous-réseaux, etc.). Cette approche est particulièrement utile sur les serveurs possédant plusieurs interfaces ou lorsqu'un système est connecté simultanément à différents réseaux.
+Firewalld introduit la notion de **zones**, permettant d'appliquer différents niveaux de confiance selon différents critères (interface réseau spécifique, sous-réseaux source, etc.). Cette approche est particulièrement utile sur les serveurs possédant plusieurs interfaces ou lorsqu'un système est connecté simultanément à différents réseaux.
 
-Contrairement à d'autres pare-feux comme UFW, firewalld possède deux configurations : la configuration active en mémoire (*runtime configuration*) et la configuration permanente (*permanent configuration*). Cela permet aux administrateurs d'effectuer des tests rapidement en mémoire et de les annuler facilement si quelque chose ne fonctionne pas.
+Contrairement à d'autres pare-feux, firewalld possède deux configurations : la configuration active en mémoire (*runtime configuration*) et la configuration permanente (*permanent configuration*). Cela permet aux administrateurs d'effectuer des tests rapidement en mémoire et de les annuler facilement si quelque chose ne fonctionne pas avant de les rendre permanents.
 
 ## Installation
 
@@ -37,26 +37,16 @@ sudo systemctl status firewalld
 
 ## Fonctionnement général
 
-Comme tout pare-feu, firewalld filtre les paquets réseau en fonction d'un ensemble de règles en tenant toujours compte de l'ordre dans lequel ces règles sont définies.
+Contrairement à iptables et UFW, qui sont principalement centrés sur l'ajout de règles individuelles, firewalld organise sa configuration autour du concept de **zones**. Une zone représente un niveau de confiance appliqué à un ensemble de connexions réseau. Les interfaces réseau et les adresses IP peuvent être associées à une zone afin que le trafic soit traité selon les règles qui y sont définies.
 
-Les actions les plus courantes sont :
+De façon générale, la configuration d'un pare-feu avec firewalld suit les étapes suivantes :
 
-| Action | Description |
-|---------|-------------|
-| allow | Autorise le trafic |
-| deny | Bloque le trafic |
-| reject | Bloque le trafic et retourne une réponse au client |
+1. Créer ou choisir une zone correspondant au niveau de confiance souhaité.
+2. Associer les interfaces réseau ou les sous-réseaux appropriés à cette zone.
+3. Autoriser les services et les ports qui doivent être accessibles dans cette zone.
+4. Ajouter des *rich rules* lorsque des règles plus précises sont nécessaires.
 
-Une règle peut notamment tenir compte :
-
-- de la zone concernée
-- de l'adresse IP source
-- d'un sous-réseau
-- d'une interface réseau
-- d'un protocole
-- d'un service
-- d'un port
-- de conditions plus avancées à l'aide des *rich rules*
+Par exemple, un serveur possédant une interface connectée à Internet pourrait utiliser la zone `public`, tandis que son réseau administratif pourrait être associé à la zone `trusted` ou à une zone personnalisée. Dans la majorité des cas, les zones et les services suffisent à définir le comportement souhaité. Les *rich rules* sont principalement utilisées lorsqu'il est nécessaire d'ajouter des exceptions ou des conditions plus avancées.
 
 ## Commande firewall-cmd
 
@@ -113,7 +103,7 @@ Une zone représente un niveau de confiance appliqué à une interface réseau o
 
 Il est alors possible d'appliquer des règles plus restrictives sur l'interface publique et des règles plus permissives sur l'interface interne.
 
-### Zones courantes
+### Zones prédéfinies
 
 Firewalld vient par défaut avec un certain nombre de zone prédéfinies, chacune ayant un niveau de confiance différent par défaut :
 
@@ -199,21 +189,21 @@ sudo firewall-cmd --permanent --zone=serveurs-web --set-target=DROP
 
 ## Configuration des services
 
-Comme UFW, firewalld reconnaît plusieurs services courants.
+Firewalld permet de spécifier plusieurs services courants par leur nom.
 
-Autoriser SSH :
+Pour autoriser SSH :
 
 ```bash
 sudo firewall-cmd [--permanent] --add-service=ssh
 ```
 
-Autoriser HTTP :
+Pour autoriser HTTP :
 
 ```bash
 sudo firewall-cmd [--permanent] --add-service=http
 ```
 
-Autoriser HTTPS :
+Pour autoriser HTTPS :
 
 ```bash
 sudo firewall-cmd [--permanent] --add-service=https
@@ -225,23 +215,20 @@ Recharger la configuration :
 sudo firewall-cmd --reload
 ```
 
-### Remarque
-
-Contrairement à UFW, plusieurs commandes de firewalld nécessitent l'option :
-
-```bash
---permanent
-```
-
-pour être conservées après un redémarrage ou un rechargement du service.
-
-Sans cette option, la modification est appliquée uniquement à la configuration active (en mémoire)
+{: .highlight}
+> Plusieurs commandes de firewalld nécessitent l'option :
+>
+>```bash
+>--permanent
+>```
+>
+> pour être conservées après un redémarrage ou un rechargement du service. Sans cette option, la modification est appliquée uniquement à la configuration active (en mémoire)
 
 ## Gestion des ports
 
 ### Port unique
 
-Autoriser un port :
+Pour autoriser un port :
 
 ```bash
 sudo firewall-cmd [--permanent] --add-port=3306/tcp
@@ -249,7 +236,7 @@ sudo firewall-cmd [--permanent] --add-port=3306/tcp
 
 ### Plage de ports
 
-Autoriser plusieurs ports :
+Pour autoriser plusieurs ports :
 
 ```bash
 sudo firewall-cmd [--permanent] --add-port=6000-6007/tcp
@@ -263,9 +250,7 @@ sudo firewall-cmd --reload
 
 ## Filtrage par adresse IP
 
-Avec firewalld, il existe deux approches principales pour contrôler l'accès selon l'adresse IP. 
-
-La première consiste à associer les hôtes ou sous-réseaux à différentes zones à l'aide de `--add-source`...
+Avec firewalld, il existe deux approches principales pour contrôler l'accès selon l'adresse IP.  La première consiste à associer les hôtes ou sous-réseaux à différentes zones à l'aide de `--add-source`...
 
 ```bash
 ```bash
@@ -282,7 +267,7 @@ La deuxième consiste à utiliser des *rich rules* lorsque des exceptions ou des
 
 ## Rich Rules
 
-Les **rich rules** permettent de créer des règles avancées dépassant les simples ouvertures de ports ou de services. On peut les voir comme l'équivalent des règles UFW telles que :
+Les ***rich rules*** permettent de créer des règles avancées dépassant les simples ouvertures de ports ou de services. On peut les voir comme l'équivalent des règles UFW telles que :
 
 ```bash
 sudo ufw allow from 192.168.1.100 to any port 22
@@ -294,7 +279,7 @@ ou
 sudo ufw deny from 10.0.0.0/24 to any port 80
 ```
 
-Une rich rule suit généralement la structure :
+Une *rich rule* suit généralement la structure :
 
 ```text
 rule [conditions] [action]
