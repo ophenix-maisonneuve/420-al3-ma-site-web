@@ -1,6 +1,6 @@
-title: "420-930-MA"
+title: "420-AL3-MA"
 remote_theme: just-the-docs/just-the-docs
-logo: "/assets/images/amp-logo.png"
+logo: "/assets/images/logo.png"
 markdown: kramdown
 plugins:
   - jekyll-remote-theme
