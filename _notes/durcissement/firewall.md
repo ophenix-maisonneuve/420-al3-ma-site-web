@@ -66,7 +66,7 @@ Cela permet d’autoriser automatiquement les réponses sans ouvrir tous les por
 
 ## En résumé
 
-- `Netfilter` est le coeur du pare-feu Linux
-- `iptables` est l'outils le plus populaire pour interagir avec Netfilter
-- `nftables` est une alternative plus moderne de `iptables` souvent utilisé en *backend* même si on utilise encore largement `iptables` pour le configurer 
-- `UFW` et `firewalld` sont des couches supplémentaires sur iptables pour en faciliter l'utilisation
+- *Netfilter* est le module du noyau Linux permettant l'implémentation d'un pare-feu
+- *iptables* est l'outils le plus populaire pour interagir avec Netfilter
+- *nftables* est une alternative plus moderne de iptables souvent utilisé en *backend* même si on utilise encore largement `iptables` en ligne de commande pour le configurer 
+- *UFW* et *firewalld* sont des couches supplémentaires sur iptables pour en faciliter l'utilisation
