@@ -1,0 +1,58 @@
+title: "420-930-MA"
+remote_theme: just-the-docs/just-the-docs
+logo: "/assets/images/amp-logo.png"
+markdown: kramdown
+plugins:
+  - jekyll-remote-theme
+
+
+mermaid:
+  version: 11.12.2
+
+
+callouts:
+  highlight:
+    title: Remarque
+    color: blue
+  warning:
+    title: Attention
+    color: yellow
+  astuce:
+    title: astuce
+    color: green
+
+collections:
+  seances:
+    output: true
+    permalink: /:collection/:name
+  notes:
+    output: true
+    permalink: /:collection/:name
+  exercices:
+    output: true
+    permalink: /:collection/:name
+  travaux:
+    output: true
+    permalink: /:collection/:name
+  examens:
+    output: true
+    permalink: /:collection/:name
+
+just_the_docs:
+  collections:
+    seances:
+      name: Séances
+      nav_fold: true
+    notes:
+      name: Notes de cours
+      nav_fold: true
+    exercices:
+      name: Exercices
+      nav_fold: true
+    travaux:
+      name: Travaux Pratiques
+      nav_fold: true
+    examens:
+      name: Examens
+      nav_fold: true
+
