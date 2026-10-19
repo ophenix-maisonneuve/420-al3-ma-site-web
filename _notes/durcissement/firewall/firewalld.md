@@ -216,13 +216,7 @@ sudo firewall-cmd --reload
 ```
 
 {: .highlight}
-> Plusieurs commandes de firewalld nécessitent l'option :
->
->```bash
->--permanent
->```
->
-> pour être conservées après un redémarrage ou un rechargement du service. Sans cette option, la modification est appliquée uniquement à la configuration active (en mémoire)
+> Plusieurs commandes de firewalld nécessitent l'option `--permanent` pour être conservées après un redémarrage ou un rechargement du service. Sans cette option, la modification est appliquée uniquement à la configuration active (en mémoire)
 
 ## Gestion des ports
 
@@ -364,10 +358,4 @@ Supprimer un port :
 
 ```bash
 sudo firewall-cmd --permanent --remove-port=3306/tcp
-```
-
-Après toute modification :
-
-```bash
-sudo firewall-cmd --reload
 ```
