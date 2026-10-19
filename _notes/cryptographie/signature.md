@@ -11,8 +11,8 @@ published: true
 La **signature numérique** permet de garantir l’authenticité d’un message et d’attester que son auteur ne peut pas nier l’avoir produit. Elle repose sur l’usage combiné d’une **clé privée** (pour signer) et d’une **clé publique** (pour vérifier).
 
 La signature apporte :
-- **Authenticité** — le message provient bien de l’émetteur déclaré.
-- **Non‑répudiation** — l’émetteur ne peut pas nier avoir signé le message.
+- **Authenticité** : le message provient bien de l’émetteur déclaré.
+- **Non‑répudiation** : l’émetteur ne peut pas nier avoir signé le message.
 
 ---
 
@@ -32,9 +32,9 @@ La signature se base sur les algorithmes à clés asymétriques (clé privée et
 
 ## Algorithmes de signature
 Les algorithmes les plus courants sont :
-- **RSA** — 2048 bits minimum, 4096 bits recommandé.
-- **ECDSA (ECC)** — 256 bits minimum, 512 bits recommandé.
-- **DSA** — 2048 bits minimum, 4096 bits recommandé.
+- **RSA** : 2048 bits minimum, 4096 bits recommandé.
+- **ECDSA (ECC)** : 256 bits minimum, 512 bits recommandé.
+- **DSA** : 2048 bits minimum, 4096 bits recommandé.
 
 Les courbes elliptiques (ECC) sont généralement plus performantes pour une sécurité équivalente.
 
@@ -68,4 +68,4 @@ La signature est essentielle dans de nombreux domaines :
 - certificats X.509 et protocoles comme TLS,
 - validation d’intégrité dans les systèmes de fichiers sécurisés.
 
-La combinaison **hachage + signature** constitue la base de la confiance dans les communications modernes.
+La combinaison **hachage et signature** est requise afin de valider conjointement l'intégrité des données et l'identité de l'émetteur de ces données.

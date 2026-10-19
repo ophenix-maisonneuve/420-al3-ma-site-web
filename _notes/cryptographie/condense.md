@@ -18,11 +18,11 @@ Une fonction de hachage est une fonction mathématique prenant en **entrée** de
 En ordre croissant de sécurité, voici quelques-uns des algorithmes de hachage les plus connus, ainsi que la taille du condensé produit:
 
 ### Exemples d’algorithmes
-- **MD5** — 128 bits
-- **SHA-1** — 160 bits
-- **SHA-256** — 256 bits
-- **SHA-384** — 384 bits
-- **SHA-512** — 512 bits
+- **MD5** : 128 bits
+- **SHA-1** : 160 bits
+- **SHA-256** : 256 bits
+- **SHA-384** : 384 bits
+- **SHA-512** : 512 bits
 
 ## Propriétés essentielles
 

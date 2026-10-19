@@ -57,9 +57,9 @@ Le chiffrement symétrique utilise **une seule clé** pour chiffrer et déchiffr
 Ce type de chiffrement est **rapide**, **efficace** et largement utilisé pour protéger de grandes quantités de données.
 
 ### Algorithmes courants
-- **AES** — standard moderne, 128 bits minimum, 256 bits recommandé
-- **3DES** — encore présent mais de moins en moins recommandé
-- **DES** — obsolète et vulnérable
+- **AES** - standard moderne, 128 bits minimum, 256 bits recommandé
+- **3DES** - encore présent mais de moins en moins recommandé
+- **DES** - obsolète et vulnérable
 
 ### Chiffrement AES avec OpenSSL
 #### 1. Génération d’une clé et d'un vecteur d'initialisation
