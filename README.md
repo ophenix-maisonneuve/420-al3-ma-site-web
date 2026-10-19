@@ -1,4 +1,4 @@
 
-# Algorithmes et modèles de programmation - 420-930-MA
+# Linux 3 - 420-930-MA
 
-Ce dépôt contient le site du cours Algorithmes et modèles de programmation.
+Ce dépôt contient le site pour le cours Linux 3.
