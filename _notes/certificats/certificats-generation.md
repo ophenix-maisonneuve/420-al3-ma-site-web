@@ -47,7 +47,7 @@ Un CSR ne contient **ni numéro de série, ni période de validité, ni signatur
 ## 4. Création d’un certificat auto‑signé
 Pour générer un certificat auto‑signé :
 ```bash
-openssl x509 -req -in certificat.csr -signkey cle_privee.pem -out certificat.crt -days 365
+openssl x509 -req -in certificat.csr -signkey cle_privee.pem -out certificat.crt -days 365 -copy_extensions copyall
 ```
 Ce certificat est fonctionnel, mais n’est généralement pas reconnu par les navigateurs car il n’est signé par aucune CA reconnue.
 
