@@ -7,4 +7,4 @@ has_toc: true
 published: true
 ---
 
-{% include shared/notes/serveurs-web/securisation-serveurs-web.md %}
+{% include shared/notes/serveurs-web/securisation-serveur-web.md %}
